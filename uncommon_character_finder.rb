@@ -27,9 +27,8 @@ class UncommonCharacterFinder
   end
   
   def find_uncommon_characters
-    uncommon_characters = test_cases.map do |test_case|
+    self.uncommon_characters = test_cases.map do |test_case|
       characters = {}
-
       test_case.each_with_index do |word, index|
         word.each do |character|
           next characters[character] = index unless characters[character]
@@ -37,9 +36,25 @@ class UncommonCharacterFinder
         end
       end 
 
+      # complexity: n(n - x) = n^2
+      # test_case_uncommon_characters = []
+      # characters.each do |character, status|
+      #   next if status == "common"
+
+      #   insert_index = 0
+      #   test_case_uncommon_characters.each do |uncommon_character|
+      #     next insert_index += 1 if character > uncommon_character
+      #     break
+      #   end
+
+      #   test_case_uncommon_characters.insert(insert_index, character)
+      # end
+
+      # test_case_uncommon_characters
+
+      # complexity: n + (n - x) + (n - x)^2 = n^2
+      # even though the first solution may be slightly more performant I think I would chose this since it is close in performance and much more readable
       characters.select { |character, status| status != "common"}.keys.sort
     end
-
-    self.uncommon_characters = uncommon_characters
   end
 end
